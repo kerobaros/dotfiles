@@ -256,6 +256,8 @@ bindsym $mod+Shift+m exec rofimpd
 
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
+exec udiskie --tray
+
 default_border pixel
 
 include /etc/sway/config.d/*
