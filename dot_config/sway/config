@@ -260,7 +260,7 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 exec udiskie --tray
 
-exec sworkstyle &> /tmp/sworkstyle.log
+exec RUST_LOG=info sworkstyle &> /tmp/sworkstyle.log
 
 default_border pixel
 
