@@ -146,6 +146,8 @@ input type:touchpad {
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+    bindsym $mod+Next workspace next
+    bindsym $mod+Prior workspace prev
 #
 # Layout stuff:
 #
