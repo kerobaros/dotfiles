@@ -260,8 +260,10 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 exec udiskie --tray
 
-exec RUST_LOG=info sworkstyle &> /tmp/sworkstyle.log
+exec_always --no-startup-id  RUST_LOG=info sworkstyle > /tmp/sworkstyle.log
 
 default_border pixel
+
+font pango:Cantarell 14px
 
 include /etc/sway/config.d/*
