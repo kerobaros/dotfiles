@@ -91,7 +91,7 @@ input type:touchpad {
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+c reload
+    bindsym $mod+Shift+r reload
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -146,8 +146,8 @@ input type:touchpad {
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
-    bindsym $mod+Next workspace next
-    bindsym $mod+Prior workspace prev
+    #bindsym $mod+Next workspace next
+    #bindsym $mod+Prior workspace prev
 #
 # Layout stuff:
 #
@@ -166,10 +166,10 @@ input type:touchpad {
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    #bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    #bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -270,8 +270,36 @@ default_border pixel
 
 font pango:Cantarell 14px
 
+# wob setup
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
+# swayr setup
+#exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
+bindsym $mod+Space exec env RUST_BACKTRACE=1 \
+    swayr switch-window >> /tmp/swayr.log 2>&1
+
+bindsym $mod+Delete exec env RUST_BACKTRACE=1 \
+    swayr quit-window >> /tmp/swayr.log 2>&1
+
+bindsym $mod+Tab exec env RUST_BACKTRACE=1 \
+    swayr switch-to-urgent-or-lru-window >> /tmp/swayr.log 2>&1
+
+bindsym $mod+Next exec env RUST_BACKTRACE=1 \
+    swayr next-window all-workspaces >> /tmp/swayr.log 2>&2
+
+bindsym $mod+Prior exec env RUST_BACKTRACE=1 \
+    swayr prev-window all-workspaces >> /tmp/swayr.log 2>&2
+
+bindsym $mod+Shift+Space exec env RUST_BACKTRACE=1 \
+    swayr switch-workspace-or-window >> /tmp/swayr.log 2>&1
+
+bindsym $mod+c exec env RUST_BACKTRACE=1 \
+    swayr execute-swaymsg-command >> /tmp/swayr.log 2>&1
+
+bindsym $mod+Shift+c exec env RUST_BACKTRACE=1 \
+    swayr execute-swayr-command >> /tmp/swayr.log 2>&1
+
+    
 include /etc/sway/config.d/*
